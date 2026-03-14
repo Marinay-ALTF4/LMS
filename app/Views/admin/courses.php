@@ -18,8 +18,21 @@ $timeOptions = [
 ];
 ?>
 
-<div class="container my-5">
-  <div class="card shadow-sm">
+<div class="admin-courses-page container my-5">
+  <section class="admin-courses-hero rounded-4 p-4 p-lg-5 mb-4 shadow-sm text-white">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+      <div>
+        <span class="badge text-bg-light text-primary mb-2">Admin Courses</span>
+        <h4 class="mb-1">Manage Course Offerings</h4>
+        <p class="mb-0">Assign teachers, update schedules, and maintain enrollment-ready course information.</p>
+      </div>
+      <button type="button" class="btn btn-light text-primary fw-semibold" data-bs-toggle="modal" data-bs-target="#addAdminCourseModal">
+        <i class="bi bi-plus-circle me-1"></i> Add New Course
+      </button>
+    </div>
+  </section>
+
+  <div class="card shadow-sm border-0 admin-courses-card">
     <div class="card-body">
       <h4 class="mb-3">Available Courses</h4>
 
@@ -29,7 +42,7 @@ $timeOptions = [
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-search"></i></span>
               <input type="text" id="adminCourseSearch" class="form-control" placeholder="Search courses..." name="search_term">
-              <button class="btn btn-outline-dark" type="submit"><i class="bi bi-search"></i> Search</button>
+              <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i> Search</button>
             </div>
           </form>
         </div>
@@ -62,8 +75,8 @@ $timeOptions = [
                 <small class="text-dark d-block">SY: <?= esc($course['school_year'] ?? 'Set school year') ?></small>
               </div>
               <div class="d-flex gap-2 align-items-center">
-                <a href="<?= base_url('admin/course/' . $course['id'] . '/upload'); ?>" class="btn btn-dark btn-sm rounded-pill">Add Material</a>
-                <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editAdminCourseModal<?= $course['id'] ?>">Edit</button>
+                <a href="<?= base_url('admin/course/' . $course['id'] . '/upload'); ?>" class="btn btn-primary btn-sm rounded-pill">Add Material</a>
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editAdminCourseModal<?= $course['id'] ?>">Edit</button>
                 <form action="<?= base_url('admin/course/delete/' . $course['id']); ?>" method="post" class="m-0" onsubmit="return confirm('Delete this course? This will remove its enrollments and materials.');">
                   <?= csrf_field() ?>
                   <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
@@ -132,7 +145,7 @@ $timeOptions = [
 
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                      <button type="submit" class="btn btn-dark">Save Changes</button>
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
                   </form>
                 </div>
@@ -145,7 +158,7 @@ $timeOptions = [
       <?php endif; ?>
 
       <div class="text-center my-4">
-        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addAdminCourseModal">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAdminCourseModal">
           <i class="bi bi-plus-circle me-1"></i> Add New Course
         </button>
       </div>
@@ -223,7 +236,7 @@ $timeOptions = [
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-dark">Add Course</button>
+                <button type="submit" class="btn btn-primary">Add Course</button>
               </div>
             </form>
           </div>
@@ -316,9 +329,42 @@ $timeOptions = [
     }
   })();
 </script>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+.admin-courses-page {
+  max-width: 1120px;
+}
+
+.admin-courses-hero {
+  background: linear-gradient(135deg, #155fa7 0%, #1d8ea8 60%, #39a3a1 100%);
+}
+
+.admin-courses-card {
+  border: 1px solid #d7e6fb;
+}
+
+.admin-course-item {
+  border: 1px solid #e4eefb;
+  border-radius: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.admin-course-item h5 {
+  color: #124e89;
+}
+
+.admin-courses-page .btn-primary {
+  background-color: #155fa7;
+  border-color: #155fa7;
+}
+
+.admin-courses-page .btn-primary:hover,
+.admin-courses-page .btn-primary:focus {
+  background-color: #124e89;
+  border-color: #124e89;
+}
+</style>
 
 <datalist id="timeOptions">
   <?php foreach ($timeOptions as $t): ?>

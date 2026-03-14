@@ -18,9 +18,9 @@ $isPath = function (string $path) use ($currentPath): bool {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-2">
-  <div class="container-sm">
-    <span class="btn btn-light px-3 py-1 fs-6 fw-bold me-3">
+<nav class="navbar navbar-expand-lg app-shell navbar-dark shadow-sm py-2">
+  <div class="container-lg">
+    <span class="role-chip px-3 py-2 fw-bold me-3">
       <?= ucfirst($role ?: 'Guest') ?>
     </span>
 
@@ -30,27 +30,27 @@ $isPath = function (string $path) use ($currentPath): bool {
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <!-- Left side -->
-      <ul class="navbar-nav me-auto">
+      <ul class="navbar-nav me-auto align-items-lg-center nav-list-gap mt-3 mt-lg-0">
         <?php if ($role === 'admin'): ?>
-          <li class="nav-item me-2"><a class="btn btn-outline-light btn-nav px-3 py-1 fs-6 <?= $isPath('dashboard') ? 'active' : '' ?>" href="<?= base_url('dashboard') ?>">Dashboard</a></li>
-          <li class="nav-item me-2"><a class="btn btn-outline-light btn-nav px-3 py-1 fs-6 <?= $isPath('admin/courses') ? 'active' : '' ?>" href="<?= base_url('admin/courses') ?>">Courses</a></li>
+          <li class="nav-item"><a class="btn nav-pill <?= $isPath('dashboard') ? 'active' : '' ?>" href="<?= base_url('dashboard') ?>">Dashboard</a></li>
+          <li class="nav-item"><a class="btn nav-pill <?= $isPath('admin/courses') ? 'active' : '' ?>" href="<?= base_url('admin/courses') ?>">Courses</a></li>
 
         <?php elseif ($role === 'teacher'): ?>
-          <li class="nav-item me-2"><a class="btn btn-outline-light btn-nav px-3 py-1 fs-6 <?= $isPath('dashboard') ? 'active' : '' ?>" href="<?= base_url('dashboard') ?>">Dashboard</a></li>
-          <li class="nav-item me-2"><a class="btn btn-outline-light btn-nav px-3 py-1 fs-6" href="<?= base_url('dashboard') ?>">Assignments</a></li>
+          <li class="nav-item"><a class="btn nav-pill <?= $isPath('dashboard') ? 'active' : '' ?>" href="<?= base_url('dashboard') ?>">Dashboard</a></li>
+          <li class="nav-item"><a class="btn nav-pill" href="<?= base_url('dashboard') ?>">Assignments</a></li>
 
         <?php elseif ($role === 'student'): ?>
-          <li class="nav-item me-2"><a class="btn btn-outline-light btn-nav px-3 py-1 fs-6 <?= $isPath('dashboard') ? 'active' : '' ?>" href="<?= base_url('dashboard') ?>">Dashboard</a></li>
-          <li class="nav-item me-2"><a class="btn btn-outline-light btn-nav px-3 py-1 fs-6 <?= $isPath('studentCourse') ? 'active' : '' ?>" href="<?= base_url('studentCourse') ?>">My Courses</a></li>
+          <li class="nav-item"><a class="btn nav-pill <?= $isPath('dashboard') ? 'active' : '' ?>" href="<?= base_url('dashboard') ?>">Dashboard</a></li>
+          <li class="nav-item"><a class="btn nav-pill <?= ($isPath('student/courses') || $isPath('studentCourse')) ? 'active' : '' ?>" href="<?= base_url('student/courses') ?>">My Courses</a></li>
         <?php endif; ?>
       </ul>
 
       <!-- Right side -->
-      <ul class="navbar-nav align-items-center">
+      <ul class="navbar-nav align-items-center mt-3 mt-lg-0 nav-list-gap">
         <?php if (session()->get('isLoggedIn')): ?>
           <!-- Notification -->
-          <li class="nav-item dropdown me-2">
-            <a class="btn btn-outline-light px-3 py-1 fs-6 position-relative" href="#" data-bs-toggle="dropdown">
+          <li class="nav-item dropdown">
+            <a class="btn nav-pill position-relative" href="#" data-bs-toggle="dropdown">
               <i class="bi bi-bell"></i>
               <span id="notifBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"><?= $notificationCount ?? 0 ?></span>
             </a>
@@ -64,11 +64,11 @@ $isPath = function (string $path) use ($currentPath): bool {
           </li>
           <!-- Logout -->
           <li class="nav-item">
-            <a class="btn btn-outline-light px-3 py-1 fs-6" href="<?= base_url('logout') ?>">Logout</a>
+            <a class="btn nav-pill nav-pill-logout" href="<?= base_url('logout') ?>">Logout</a>
           </li>
         <?php else: ?>
-          <li class="nav-item me-2"><a class="btn btn-outline-light btn-nav px-3 py-1 fs-6 <?= $isPath('login') ? 'active' : '' ?>" href="<?= base_url('login') ?>">Login</a></li>
-          <li class="nav-item"><a class="btn btn-primary btn-nav px-3 py-1 fs-6 <?= $isPath('register') ? 'active' : '' ?>" href="<?= base_url('register') ?>">Register</a></li>
+          <li class="nav-item"><a class="btn nav-pill <?= $isPath('login') ? 'active' : '' ?>" href="<?= base_url('login') ?>">Login</a></li>
+          <li class="nav-item"><a class="btn btn-light text-primary fw-semibold rounded-pill px-3 py-2 <?= $isPath('register') ? 'active' : '' ?>" href="<?= base_url('register') ?>">Register</a></li>
         <?php endif; ?>
       </ul>
     </div>
@@ -108,35 +108,79 @@ $(function(){
 </script>
 
 <style>
-.btn-outline-light {
-  border-width: 1.5px;
-  border-radius: .4rem;
-  transition: 0.2s;
+.app-shell {
+  background: linear-gradient(90deg, #124875 0%, #19608f 48%, #1f7ea0 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
-.btn-outline-light:hover {
-  background:#f8f9fa;
-  color:#212529;
+
+.role-chip {
+  background: #ffffff;
+  color: #114d79;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  line-height: 1;
 }
+
+.nav-list-gap {
+  gap: 0.45rem;
+}
+
+.nav-pill {
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  color: #f4f9ff;
+  padding: 0.45rem 1rem;
+  font-size: 0.92rem;
+  transition: all 0.18s ease;
+}
+
+.nav-pill:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
 .btn-nav.active,
 .btn-nav.active:hover {
-  background:#f8f9fa;
-  color:#212529;
-  border-color:#f8f9fa;
-  box-shadow: inset 0 0 0 1px #f8f9fa;
+  background: #ffffff;
+  color: #114d79;
+  border-color: #ffffff;
+  box-shadow: none;
 }
+
+.nav-pill.active,
+.nav-pill.active:hover {
+  background: #ffffff;
+  color: #114d79;
+  border-color: #ffffff;
+}
+
+.nav-pill-logout {
+  background: rgba(255, 255, 255, 0.12);
+}
+
 #notifBadge {
-  font-size: .7rem;
-  padding: .25em .45em;
+  font-size: 0.7rem;
+  padding: 0.25em 0.45em;
   min-width: 18px;
 }
+
 #notifList .alert {
-  font-size: .9rem;
-  border-radius: .375rem;
+  font-size: 0.9rem;
+  border-radius: 0.45rem;
   cursor: pointer;
   border-left: 4px solid transparent;
-  transition: 0.3s;
+  transition: 0.2s;
 }
+
 #notifList .alert-info { border-left-color: #0dcaf0; }
 #notifList .alert-secondary { border-left-color: #6c757d; }
 #notifList .alert:hover { opacity: 0.9; transform: scale(1.01); }
+
+@media (max-width: 991.98px) {
+  .nav-pill,
+  .nav-pill-logout {
+    width: fit-content;
+  }
+}
 </style>

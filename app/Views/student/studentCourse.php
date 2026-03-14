@@ -4,39 +4,28 @@
   <meta charset="UTF-8">
   <title>My Courses</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!--  Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-light">
+<body>
 
   <!--  Include header template -->
   <?php include('app/Views/templates/header.php'); ?>
 
-  <!--  Main courses container -->
-  <div class="d-flex justify-content-center align-items-start mt-5">
-    <div class="card shadow p-4 border border-dark" style="max-width: 1000px; width: 100%; background-color: #e9ecef;">
-      <div class="card-body">
+  <main class="student-courses-page container py-5 mt-4 mt-lg-5">
+    <section class="student-courses-hero rounded-4 p-4 p-lg-5 mb-4 shadow-sm text-white">
+      <span class="badge text-bg-light text-primary mb-3">Student Center</span>
+      <h3 class="mb-2">My Courses</h3>
+      <p class="mb-0">Hello, <?= esc(session()->get('name') ?? 'User') ?>. Track your enrolled subjects, pending requests, and available classes to join.</p>
+    </section>
 
-        <!--  Page title -->
-        <h3 class="card-title mb-4 text-dark">
-          My Courses
-        </h3>
+    <div id="enroll-alert" class="mb-3"></div>
 
-        <p class="text-dark">
-          Hello, <?= session()->get('name') ?? 'User' ?>! Here you can view your enrolled courses and enroll in new ones.
-        </p>
-
-        <hr>
-
-        <!--  Enrollment Alert -->
-        <div id="enroll-alert" class="mb-3"></div>
-
-        <div class="row g-4">
+    <div class="row g-4">
           <!--  Enrolled Courses -->
           <div class="col-12 col-lg-6">
-            <div class="card shadow-sm h-100">
-              <div class="card-header fw-bold">Enrolled Courses</div>
+            <div class="card shadow-sm h-100 student-panel">
+              <div class="card-header fw-bold panel-header">Enrolled Courses</div>
               <ul id="enrolled-courses" class="list-group list-group-flush">
                 <?php if (!empty($data['enrolledCourses'])): ?>
                   <?php foreach ($data['enrolledCourses'] as $course): ?>
@@ -53,7 +42,7 @@
                         <div class="text-end">
                           <span class="badge text-bg-success mb-2">Enrolled</span>
                           <div>
-                                <a href="<?= base_url('student/course/' . (int) ($course['course_id'] ?? $course['id'] ?? 0)) ?>" class="btn btn-dark">View Course</a>
+                                <a href="<?= base_url('student/course/' . (int) ($course['course_id'] ?? $course['id'] ?? 0)) ?>" class="btn btn-primary btn-sm">View Course</a>
                           </div>
                         </div>
                       </div>
@@ -68,8 +57,8 @@
 
           <!--  Pending + Available Courses -->
           <div class="col-12 col-lg-6">
-            <div class="card shadow-sm mb-3">
-              <div class="card-header fw-bold">Pending Approval</div>
+            <div class="card shadow-sm mb-3 student-panel">
+              <div class="card-header fw-bold panel-header">Pending Approval</div>
               <ul id="pending-courses" class="list-group list-group-flush">
                 <?php if (!empty($data['pendingCourses'])): ?>
                   <?php foreach ($data['pendingCourses'] as $course): ?>
@@ -89,8 +78,8 @@
               </ul>
             </div>
 
-            <div class="card shadow-sm">
-              <div class="card-header fw-bold">Available Courses</div>
+            <div class="card shadow-sm student-panel">
+              <div class="card-header fw-bold panel-header">Available Courses</div>
               <ul id="available-courses" class="list-group list-group-flush">
                 <?php if (!empty($data['availableCourses'])): ?>
                   <?php foreach ($data['availableCourses'] as $course): ?>
@@ -105,7 +94,7 @@
                           <small class="text-dark d-block">SY: <?= esc($course['school_year'] ?? 'TBD') ?></small>
                         </div>
                         <!--  Enroll button with course ID -->
-                        <button class="btn btn-dark btn-sm enroll-btn"
+                        <button class="btn btn-primary btn-sm enroll-btn"
                                 data-course-id="<?= (int)$course['id'] ?>">Enroll</button>
                       </div>
                     </li>
@@ -117,13 +106,11 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+  </main>
 
           <!--  jQuery and Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   
        <!-- AJAX SCRIPT FOR ENROLLMENT-->
@@ -173,7 +160,7 @@
                 '<div class="d-flex justify-content-between align-items-start">' +
                   '<div>' +
                     '<div class="fw-semibold">' + $('<div>').text(title).html() + '</div>' +
-                    '<small class="text-muted">' + $('<div>').text(desc).html() + '</small>' +
+                    '<small class="text-dark d-block">' + $('<div>').text(desc).html() + '</small>' +
                   '</div>' +
                   '<span class="badge ' + badgeClass + '">' + badgeLabel + '</span>' +
                 '</div>' +
@@ -209,5 +196,44 @@
     });
   });
   </script>
+
+<style>
+body {
+  background: linear-gradient(180deg, #f5f9ff 0%, #edf4ff 48%, #f8fbff 100%);
+  color: #163047;
+}
+
+.student-courses-page {
+  max-width: 1120px;
+}
+
+.student-courses-hero {
+  background: linear-gradient(135deg, #155fa7 0%, #1d8ea8 60%, #39a3a1 100%);
+}
+
+.student-panel {
+  border: 1px solid #d7e6fb;
+}
+
+.panel-header {
+  background: #f4f9ff;
+  border-bottom: 1px solid #d7e6fb;
+}
+
+.student-courses-page .list-group-item {
+  border-color: #e8f0fb;
+}
+
+.student-courses-page .btn-primary {
+  background-color: #155fa7;
+  border-color: #155fa7;
+}
+
+.student-courses-page .btn-primary:hover,
+.student-courses-page .btn-primary:focus {
+  background-color: #124e89;
+  border-color: #124e89;
+}
+</style>
 </body>
 </html>

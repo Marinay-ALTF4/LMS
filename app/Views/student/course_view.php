@@ -48,7 +48,7 @@ include('app/Views/templates/header.php');
               <div class="text-muted">Time: <?= esc($course['class_time'] ?? 'TBA') ?></div>
               <div class="text-muted">School Year: <?= esc($course['school_year'] ?? 'TBD') ?></div>
             </div>
-            <a class="btn btn-outline-dark" href="<?= base_url('studentCourse') ?>">Back to My Courses</a>
+            <a class="btn btn-outline-dark" href="<?= base_url('student/courses') ?>">Back to My Courses</a>
           </div>
 
           <div class="tab-content">

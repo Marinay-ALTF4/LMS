@@ -20,12 +20,14 @@ class UserSeeder extends Seeder
                 'email'    => 'Lemuel@example.com',
                 'password' => password_hash('lemuel123', PASSWORD_DEFAULT),
                 'role'     => 'teacher',
+                'course_name' => 'BSIT',
             ],
             [
                 'name'     => 'Prof. Ed',
                 'email'    => 'bangs@example.com',
                 'password' => password_hash('bangs123', PASSWORD_DEFAULT),
                 'role'     => 'teacher',
+                'course_name' => 'BSCS',
             ],
             [
                 'name'     => 'Haring Manggi',

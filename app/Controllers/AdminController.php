@@ -80,11 +80,27 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Invalid role selected.');
         }
 
+        $role = $data['role'];
+        $courseName = isset($data['course_name']) ? trim((string) $data['course_name']) : '';
+
+        if ($role === 'student') {
+            if ($courseName === '') {
+                return redirect()->back()->with('error', 'Course is required when role is Student.');
+            }
+
+            if (!in_array($courseName, ['BSIT', 'BSCS'], true)) {
+                return redirect()->back()->with('error', 'Invalid course selected.');
+            }
+        } else {
+            $courseName = null;
+        }
+
         // Save user (normalize email to lowercase)
         $result = $this->userModel->save([
             'name' => trim($data['name']),
             'email' => $email,
-            'role' => $data['role'],
+            'role' => $role,
+            'course_name' => $courseName,
             'password' => password_hash($data['password'], PASSWORD_DEFAULT),
         ]);
 

@@ -2,11 +2,17 @@
 include('app/Views/templates/header.php');
 ?>
 
-<div class="container my-5">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h4 class="mb-0">Course Dashboard</h4>
-    <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#enrollStudentModal">Enroll Student</button>
-  </div>
+<div class="teacher-course-page container my-5">
+  <section class="teacher-course-hero rounded-4 p-4 p-lg-5 mb-4 shadow-sm text-white">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+      <div>
+        <span class="badge text-bg-light text-primary mb-2">Course Workspace</span>
+        <h4 class="mb-1">Course Dashboard</h4>
+        <p class="mb-0">Manage enrollments, assignments, and materials for this class.</p>
+      </div>
+      <button class="btn btn-light text-primary fw-semibold" data-bs-toggle="modal" data-bs-target="#enrollStudentModal">Enroll Student</button>
+    </div>
+  </section>
 
   <?php if (session()->getFlashdata('success')): ?>
     <div class="alert alert-success" role="alert">
@@ -37,14 +43,14 @@ include('app/Views/templates/header.php');
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-dark">Enroll</button>
+            <button type="submit" class="btn btn-primary">Enroll</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <div class="card shadow-sm mb-4">
+  <div class="card shadow-sm mb-4 teacher-panel">
     <div class="card-body">
       <h5 class="card-title mb-2"><?= esc($course['title'] ?? 'Course') ?></h5>
       <p class="mb-2 text-dark">Course Code: <?= esc($course['description'] ?? 'N/A') ?></p>
@@ -54,10 +60,10 @@ include('app/Views/templates/header.php');
     </div>
   </div>
 
-  <div class="card shadow-sm mb-4">
+  <div class="card shadow-sm mb-4 teacher-panel">
     <div class="card-header d-flex justify-content-between align-items-center">
       <span class="fw-semibold">Enrollments</span>
-      <span class="badge bg-dark">Pending: <?= count(array_filter($enrollments ?? [], fn($e) => strtolower($e['status'] ?? 'pending') === 'pending')) ?></span>
+      <span class="badge bg-primary">Pending: <?= count(array_filter($enrollments ?? [], fn($e) => strtolower($e['status'] ?? 'pending') === 'pending')) ?></span>
     </div>
     <div class="card-body p-0">
       <?php if (!empty($enrollments)): ?>
@@ -129,10 +135,10 @@ include('app/Views/templates/header.php');
     </div>
   </div>
 
-  <div class="card shadow-sm mb-4">
+  <div class="card shadow-sm mb-4 teacher-panel">
     <div class="card-header d-flex justify-content-between align-items-center">
       <span class="fw-semibold">Assignments</span>
-      <button class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#assignmentModal">Add Assignment</button>
+      <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#assignmentModal">Add Assignment</button>
     </div>
     <div class="card-body p-0">
       <?php if (!empty($assignments)): ?>
@@ -230,17 +236,17 @@ include('app/Views/templates/header.php');
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-dark">Save Assignment</button>
+            <button type="submit" class="btn btn-primary">Save Assignment</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <div class="card shadow-sm mt-4">
+  <div class="card shadow-sm mt-4 teacher-panel">
     <div class="card-header d-flex justify-content-between align-items-center">
       <span class="fw-semibold">Materials</span>
-      <a class="btn btn-sm btn-dark" href="<?= base_url('admin/course/' . ($course['id'] ?? 0) . '/upload'); ?>">Add Material</a>
+      <a class="btn btn-sm btn-primary" href="<?= base_url('admin/course/' . ($course['id'] ?? 0) . '/upload'); ?>">Add Material</a>
     </div>
     <div class="card-body p-0">
       <?php if (!empty($materials)): ?>
@@ -251,7 +257,7 @@ include('app/Views/templates/header.php');
                 <div class="fw-semibold text-truncate" style="max-width: 480px;"><?= esc($mat['file_name']) ?></div>
               </div>
               <div class="d-flex gap-2">
-                <a class="btn btn-sm btn-outline-dark" href="<?= site_url('materials/download/' . $mat['id']) ?>">Download</a>
+                <a class="btn btn-sm btn-outline-primary" href="<?= site_url('materials/download/' . $mat['id']) ?>">Download</a>
                 <a class="btn btn-sm btn-outline-danger" href="<?= site_url('materials/delete/' . $mat['id']) ?>" onclick="return confirm('Delete this file?');">Delete</a>
               </div>
             </div>
@@ -264,5 +270,34 @@ include('app/Views/templates/header.php');
   </div>
 </div>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+.teacher-course-page {
+  max-width: 1120px;
+}
+
+.teacher-course-hero {
+  background: linear-gradient(135deg, #155fa7 0%, #1d8ea8 60%, #39a3a1 100%);
+}
+
+.teacher-panel {
+  border: 1px solid #d7e6fb;
+}
+
+.teacher-course-page .card-header {
+  background: #f4f9ff;
+  border-bottom: 1px solid #d7e6fb;
+}
+
+.teacher-course-page .btn-primary {
+  background-color: #155fa7;
+  border-color: #155fa7;
+}
+
+.teacher-course-page .btn-primary:hover,
+.teacher-course-page .btn-primary:focus {
+  background-color: #124e89;
+  border-color: #124e89;
+}
+</style>

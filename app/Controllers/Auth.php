@@ -30,6 +30,13 @@ class Auth extends BaseController
                         'is_unique' => 'Email is already registered.',
                     ],
                 ],
+                'course_name' => [
+                    'rules' => 'required|in_list[BSIT,BSCS]',
+                    'errors' => [
+                        'required' => 'Please select your course.',
+                        'in_list' => 'Please choose a valid course option.',
+                    ],
+                ],
                 'password'         => 'required|min_length[6]',
                 'password_confirm' => 'matches[password]'
             ];
@@ -40,7 +47,8 @@ class Auth extends BaseController
                     'name'     => $this->request->getVar('name'),
                     'email'    => $this->request->getVar('email'),
                     'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
-                    'role'     => 'student' // Default role sa register
+                    'role'     => 'student', // Default role sa register
+                    'course_name' => $this->request->getVar('course_name'),
                 ]);
 
                 return redirect()->to('/login')->with('success', 'Registration Success. Proceed to login.');
@@ -83,6 +91,7 @@ class Auth extends BaseController
                     'name'      => $user['name'],
                     'email'     => $user['email'],
                     'role'      => $user['role'],
+                    'course_name' => $user['course_name'] ?? null,
                     'isLoggedIn'=> true
                 ]);
                 $session->setFlashdata('success', 'Welcome ' . $user['name']);
@@ -233,7 +242,7 @@ public function studentCourse()
             ->findAll();
     }
 
-    return view('auth/studentCourse', [
+    return view('student/studentCourse', [
         'role' => $role,
         'data' => $data,
     ]);

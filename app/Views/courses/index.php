@@ -2,8 +2,16 @@
 include('app/Views/templates/header.php');
 ?>
 
-<div class="container my-5">
-  <h4 class="mb-3">Courses</h4>
+<div class="courses-page container my-5">
+  <section class="courses-hero rounded-4 p-4 p-lg-5 mb-4 shadow-sm text-white">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+      <div>
+        <span class="badge text-bg-light text-primary mb-2">My Courses</span>
+        <h4 class="mb-1">Explore Your Learning Spaces</h4>
+        <p class="mb-0">Find your enrolled courses, review details, and open each course dashboard.</p>
+      </div>
+    </div>
+  </section>
 
   <div class="row mb-3">
     <div class="col-md-6">
@@ -11,7 +19,7 @@ include('app/Views/templates/header.php');
         <div class="input-group">
           <span class="input-group-text"><i class="bi bi-search"></i></span>
           <input type="text" id="courseSearchInput" name="search_term" class="form-control" placeholder="Search courses...">
-          <button class="btn btn-outline-dark" type="submit"><i class="bi bi-search"></i> Search</button>
+          <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i> Search</button>
         </div>
       </form>
     </div>
@@ -21,14 +29,14 @@ include('app/Views/templates/header.php');
     <?php if (!empty($courses)): ?>
       <?php foreach ($courses as $course): ?>
         <div class="col-md-4 mb-4 course-card" data-search="<?= esc(strtolower((string) ($course['title'] . ' ' . $course['description'] . ' ' . ($course['semester'] ?? '') . ' ' . ($course['school_year'] ?? '')))) ?>">
-          <div class="card h-100">
+          <div class="card h-100 course-item shadow-sm border-0">
             <div class="card-body d-flex flex-column">
               <h5 class="card-title"><?= esc($course['title']) ?></h5>
               <p class="card-text">Course Code: <?= esc($course['description']) ?></p>
               <small class="text-muted d-block">Semester/Term: <?= esc($course['semester'] ?? 'Not set') ?></small>
               <small class="text-muted d-block">SY: <?= esc($course['school_year'] ?? 'TBD') ?></small>
               <div class="mt-auto pt-2">
-                <a href="<?= base_url('student/course/' . (int) ($course['id'] ?? 0)) ?>" class="btn btn-dark w-100">View Course</a>
+                <a href="<?= base_url('student/course/' . (int) ($course['id'] ?? 0)) ?>" class="btn btn-primary w-100">View Course</a>
               </div>
             </div>
           </div>
@@ -77,14 +85,14 @@ include('app/Views/templates/header.php');
         card.className = 'col-md-4 mb-4 course-card';
         card.dataset.search = normalize(`${course.title} ${course.description} ${course.semester ?? ''} ${course.school_year ?? ''}`);
         card.innerHTML = `
-          <div class="card h-100">
+          <div class="card h-100 course-item shadow-sm border-0">
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">${course.title ?? 'Course'}</h5>
               <p class="card-text">Course Code: ${course.description ?? ''}</p>
               <small class="text-muted d-block">Semester/Term: ${course.semester ?? 'Not set'}</small>
               <small class="text-muted d-block">SY: ${course.school_year ?? 'TBD'}</small>
               <div class="mt-auto pt-2">
-                <a href="<?= base_url('student/course/') ?>${course.id ?? course.course_id ?? ''}" class="btn btn-dark w-100">View Course</a>
+                <a href="<?= base_url('student/course/') ?>${course.id ?? course.course_id ?? ''}" class="btn btn-primary w-100">View Course</a>
               </div>
             </div>
           </div>
@@ -126,3 +134,21 @@ include('app/Views/templates/header.php');
     }
   })();
 </script>
+
+<style>
+.courses-page {
+  max-width: 1120px;
+}
+
+.courses-hero {
+  background: linear-gradient(135deg, #155fa7 0%, #1d8ea8 60%, #39a3a1 100%);
+}
+
+.course-item {
+  border: 1px solid #d7e6fb;
+}
+
+.course-item .card-title {
+  color: #124e89;
+}
+</style>
