@@ -2,7 +2,7 @@
 Options -Indexes
 
 # ----------------------------------------------------------------------
-# Rewrite engine
+# Rewrite engine 
 # ----------------------------------------------------------------------
 
 # Turning on the rewrite engine is necessary for the following rules and features.

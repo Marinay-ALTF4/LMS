@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 frameworks.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *

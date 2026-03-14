@@ -4,7 +4,7 @@ vendor/
 # Public uploads
 uploads/materials/
 
-# CodeIgniter writable directories
+# CodeIgniter writable directorie
 writable/cache/
 writable/logs/
 writable/debugbar/

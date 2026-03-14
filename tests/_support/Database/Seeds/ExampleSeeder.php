@@ -10,7 +10,7 @@ class ExampleSeeder extends Seeder
     {
         $factories = [
             [
-                'name'    => 'Test Factory',
+                'name'    => 'Tests Factory',
                 'uid'     => 'test001',
                 'class'   => 'Factories\Tests\NewFactory',
                 'icon'    => 'fas fa-puzzle-piece',
